@@ -1,18 +1,14 @@
-Sure! Here's a basic `README.md` file for your Sanity blog project using Sanity Studio and Next.js with TypeScript:
-
----
-
 # Sanity Blog (TypeScript)
 
 This is a modern blog application built with [Sanity](https://www.sanity.io/) as a headless CMS and [Next.js](https://nextjs.org/) as the frontend, developed using [TypeScript](https://www.typescriptlang.org/). The project integrates dynamic content fetching and static generation, allowing you to manage and display blog posts efficiently.
 
-## Features
+## 🚀 Features
 
-- **Sanity Studio**: A fully customized content management system (CMS) for easy content creation and management.
-- **Next.js Frontend**: A dynamic blog interface that fetches content from Sanity and displays it with static site generation.
-- **TypeScript**: The entire codebase is written in TypeScript, offering type safety and better developer experience.
-- **Rich Content**: Blog posts with rich text content, images, categories, and author details.
-- **Static Site Generation (SSG)**: Optimized page rendering with Next.js for better performance and SEO.
+- ⚙️ **Sanity Studio** – Customizable content management system (CMS)
+- ⚡ **Next.js Frontend** – Static site generation for fast, SEO-friendly pages
+- 🔒 **TypeScript** – Type safety across the codebase
+- 📝 **Rich Content** – Support for blog posts with images, categories, and authors
+- 📁 **Project Schema** – Add and manage personal or portfolio projects
 
 ## Getting Started
 
