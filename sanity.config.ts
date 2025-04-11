@@ -7,8 +7,8 @@ export default defineConfig({
   name: 'default',
   title: 'barkat-portfolio',
 
-  projectId: process.env.PROJECTID || 'defaultProjectId',
-  dataset: process.env.DATASET || 'defaultDataset',
+  projectId: process.env.SANITY_STUDIO_PROJECTID || 'default-project-id',
+  dataset: process.env.SANITY_STUDIO_DATASET || 'default-dataset',
 
   plugins: [structureTool(), visionTool()],
 
