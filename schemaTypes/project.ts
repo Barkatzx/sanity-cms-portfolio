@@ -52,7 +52,7 @@ export default defineType({
         list: [
           {title: 'Full Stack', value: 'Full Stack'},
           {title: 'WordPress', value: 'WordPress'},
-          {title: 'Front-End', value: 'Front-End'},
+          {title: 'Flutter Apps', value: 'Flutter Apps'},
         ],
         layout: 'radio',
       },
