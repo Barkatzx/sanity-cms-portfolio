@@ -31,6 +31,7 @@ export default defineType({
       title: 'Title',
       type: 'string',
     }),
+    // In your existing project.ts file, add this field to the fields array:
     defineField({
       name: 'slug',
       title: 'Slug',
