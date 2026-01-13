@@ -1,6 +1,6 @@
 # Sanity Blog (TypeScript)
 
-This is a modern blog application built with [Sanity](https://www.sanity.io/) as a headless CMS and [Next.js](https://nextjs.org/) as the frontend, developed using [TypeScript](https://www.typescriptlang.org/). The project integrates dynamic content fetching and static generation, allowing you to manage and display blog posts efficiently.
+This is a modern blog application built with [Sanity](https://www.sanity.io/) as a headless CMS and [Next.js](https://nextjs.org/) as the frontend, developed using [TypeScript](https://www.typescriptlang.org/). The project integrates dynamic content fetching and static generation, allowing you to manage and display blog posts efficiently..
 
 ## 🚀 Features
 
