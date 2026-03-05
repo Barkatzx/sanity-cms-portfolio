@@ -20,6 +20,14 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'excerpt',
+      title: 'Excerpt',
+      type: 'text',
+      rows: 3,
+      validation: (Rule) => Rule.max(200).warning('Excerpt should be under 200 characters'),
+      description: 'Short summary of the post for blog cards and SEO',
+    }),
+    defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',

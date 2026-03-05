@@ -1,15 +1,5 @@
-import {defineType, defineArrayMember} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
-/**
- * This is the schema definition for the rich text fields used for
- * for this blog studio. When you import it in schemas.js it can be
- * reused in other parts of the studio with:
- *  {
- *    name: 'someName',
- *    title: 'Some title',
- *    type: 'blockContent'
- *  }
- */
 export default defineType({
   title: 'Block Content',
   name: 'blockContent',
@@ -18,50 +8,132 @@ export default defineType({
     defineArrayMember({
       title: 'Block',
       type: 'block',
-      // Styles let you set what your user can mark up blocks with. These
-      // correspond with HTML tags, but you can set any title or value
-      // you want and decide how you want to deal with it where you want to
-      // use your content.
       styles: [
         {title: 'Normal', value: 'normal'},
         {title: 'H1', value: 'h1'},
         {title: 'H2', value: 'h2'},
         {title: 'H3', value: 'h3'},
         {title: 'H4', value: 'h4'},
+        {title: 'H5', value: 'h5'},
         {title: 'Quote', value: 'blockquote'},
       ],
-      lists: [{title: 'Bullet', value: 'bullet'}],
-      // Marks let you mark up inline text in the block editor.
+      lists: [
+        {title: 'Bullet', value: 'bullet'},
+        {title: 'Numbered', value: 'number'}, // matches <ol> in PortableText
+      ],
       marks: {
-        // Decorators usually describe a single property – e.g. a typographic
-        // preference or highlighting by editors.
         decorators: [
-          {title: 'Strong', value: 'strong'},
-          {title: 'Emphasis', value: 'em'},
+          {title: 'Strong', value: 'strong'}, // font-bold
+          {title: 'Emphasis', value: 'em'}, // italic
         ],
-        // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
             title: 'URL',
             name: 'link',
             type: 'object',
             fields: [
-              {
+              defineField({
                 title: 'URL',
                 name: 'href',
                 type: 'url',
-              },
+                validation: (Rule) =>
+                  Rule.uri({
+                    allowRelative: true,
+                    scheme: ['http', 'https', 'mailto', 'tel'],
+                  }),
+              }),
             ],
           },
         ],
       },
     }),
-    // You can add additional types here. Note that you can't use
-    // primitive types such as 'string' and 'number' in the same array
-    // as a block type.
+
+    // Image block — matches types.image in PortableText (with caption support)
     defineArrayMember({
       type: 'image',
       options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alt text',
+          description: 'Describe the image for accessibility and SEO',
+          validation: (Rule) => Rule.required().warning('Alt text is recommended'),
+        }),
+        defineField({
+          name: 'caption',
+          type: 'string',
+          title: 'Caption',
+          description: 'Optional caption shown below the image',
+        }),
+      ],
+    }),
+
+    // Code Block — for copyable code snippets
+    defineArrayMember({
+      title: 'Code Block',
+      name: 'codeBlock',
+      type: 'object',
+      icon: () => '📝',
+      fields: [
+        defineField({
+          name: 'code',
+          type: 'text',
+          title: 'Code',
+          description: 'Paste your code here',
+          validation: (Rule) => Rule.required().error('Code is required'),
+          rows: 10,
+        }),
+        defineField({
+          name: 'language',
+          type: 'string',
+          title: 'Language',
+          description: 'Select programming language for syntax highlighting',
+          options: {
+            list: [
+              {title: 'JavaScript', value: 'javascript'},
+              {title: 'TypeScript', value: 'typescript'},
+              {title: 'Python', value: 'python'},
+              {title: 'HTML', value: 'html'},
+              {title: 'CSS', value: 'css'},
+              {title: 'JSX', value: 'jsx'},
+              {title: 'TSX', value: 'tsx'},
+              {title: 'JSON', value: 'json'},
+              {title: 'Markdown', value: 'markdown'},
+              {title: 'Bash/Shell', value: 'bash'},
+              {title: 'SQL', value: 'sql'},
+              {title: 'Text', value: 'text'},
+            ],
+            layout: 'dropdown',
+          },
+          initialValue: 'text',
+        }),
+        defineField({
+          name: 'title',
+          type: 'string',
+          title: 'Title (Optional)',
+          description: 'Display a title above the code block',
+        }),
+        defineField({
+          name: 'showLineNumbers',
+          type: 'boolean',
+          title: 'Show Line Numbers',
+          initialValue: false,
+        }),
+      ],
+      preview: {
+        select: {
+          title: 'title',
+          language: 'language',
+          code: 'code',
+        },
+        prepare({title, language, code}) {
+          return {
+            title: title || 'Code Block',
+            subtitle: `${language || 'text'} — ${code?.substring(0, 50)}${code?.length > 50 ? '...' : ''}`,
+          }
+        },
+      },
     }),
   ],
 })
