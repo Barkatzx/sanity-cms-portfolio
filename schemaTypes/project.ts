@@ -4,34 +4,15 @@ export default defineType({
   name: 'project',
   title: 'Projects',
   type: 'document',
+
   fields: [
     defineField({
-      name: 'photos',
-      title: 'Photos',
-      type: 'array',
-      of: [
-        {
-          type: 'image',
-          options: {
-            hotspot: true,
-          },
-        },
-      ],
-    }),
-    defineField({
-      name: 'mainImage',
-      title: 'Main Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Project Title',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
-    // In your existing project.ts file, add this field to the fields array:
+
     defineField({
       name: 'slug',
       title: 'Slug',
@@ -40,52 +21,66 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
+      name: 'mainImage',
+      title: 'Main Image',
+      type: 'image',
+      options: {hotspot: true},
     }),
+
     defineField({
-      name: 'feature',
+      name: 'body',
+      title: 'Project Description',
+      type: 'blockContent',
+    }),
+
+    defineField({
+      name: 'features',
       title: 'Key Features',
       type: 'array',
       of: [{type: 'string'}],
     }),
+
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Full Stack', value: 'Full Stack'},
-          {title: 'WordPress', value: 'WordPress'},
-          {title: 'Flutter Apps', value: 'Flutter Apps'},
-        ],
-        layout: 'radio',
-      },
-    }),
-    defineField({
-      name: 'technology',
-      title: 'Technology',
+      name: 'categories',
+      title: 'Categories',
       type: 'array',
       of: [{type: 'string'}],
     }),
+
     defineField({
-      name: 'livelink',
-      title: 'Live Link',
+      name: 'technologies',
+      title: 'Technologies Used',
+      type: 'array',
+      of: [{type: 'string'}],
+    }),
+
+    defineField({
+      name: 'liveLink',
+      title: 'Live Website',
       type: 'url',
     }),
+
     defineField({
-      name: 'clientlink',
-      title: 'Client Repo',
+      name: 'clientRepo',
+      title: 'Client Repository',
       type: 'url',
     }),
+
     defineField({
-      name: 'serverlink',
-      title: 'Server Repo',
+      name: 'serverRepo',
+      title: 'Server Repository',
       type: 'url',
     }),
   ],
+
+  preview: {
+    select: {
+      title: 'title',
+      media: 'mainImage',
+    },
+  },
 })
